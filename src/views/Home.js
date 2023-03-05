@@ -8,11 +8,11 @@ function Home({user}) {
   const [tasks, setTasks] = useState([])
   const [allTasks, setAllTasks] = useState([])
 
-  const user_id = localStorage.getItem('user_id')
+  const user_id = localStorage.getItem('id_of_user')
 
 
 useEffect(() =>{
-  fetch(`http://localhost:9393/tasks/${user_id}`)
+  fetch(`http://localhost:9393/tasks/${id_of_user}`)
   .then(response => response.json())
   .then((tasks) => {
     console.log(tasks)
