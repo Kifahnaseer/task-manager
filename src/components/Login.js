@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 function Login({setUser}) {
@@ -16,7 +16,7 @@ function login(e){
   .then(response => response.json())
   .then(data => {
     setUser(data)
-    localStorage.setItem('user_id', `${data.id}`)
+    localStorage.setItem('id_of_user', `${data.id}`)
     navigate('/')
   })
 }
