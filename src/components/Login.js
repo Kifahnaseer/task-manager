@@ -27,7 +27,7 @@ function onchange(e){
   return (
     <div>
       <form onSubmit={login}>
-        <input type="email" placeholder='Enter your email here....' name='email' onBlur={onchange}/>
+        <input type="any_alphabet" placeholder='Enter alphabet....' name='email' onBlur={onchange}/>
         <input type="password" placeholder='Enter your password...' name='password' onBlur={onchange}/>
         <button>Login</button>
       </form>

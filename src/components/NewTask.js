@@ -22,8 +22,8 @@ function NewTask() {
 export default NewTask
 
 
- // t.string :name
- // t.text :description
- // t.date :date_of_completion
- // t.boolean :follow_up
- // t.integer :id_of_user
+     // t.string :name
+     // t.text :description
+     // t.date :date_of_completion
+     // t.boolean :follow_up
+     // t.integer :id_of_user

@@ -1,18 +1,15 @@
 import React, {useState, useEffect} from 'react'
-import NavBar from '../components/NavBar'
-import Task from '../components/Task'
-
 
 function Home({user}) {
 
-  const [tasks, setTasks] = useState([])
+  const [, setTasks] = useState([])
   const [allTasks, setAllTasks] = useState([])
 
-  const user_id = localStorage.getItem('id_of_user')
+  const user_id = localStorage.getItem('user_id')
 
 
 useEffect(() =>{
-  fetch(`http://localhost:9393/tasks/${id_of_user}`)
+  fetch(`http://localhost:9393/$`)
   .then(response => response.json())
   .then((tasks) => {
     console.log(tasks)

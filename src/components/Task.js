@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react'
 
 function Task() {
 
-  const [setTasks] = useState([])
+  const [, setTasks] = useState([])
   const [allTasks, setAllTasks] = useState([])
 
 useEffect(() =>{
-  fetch("https://jsonplaceholder.typicode.com/posts")
+  fetch("https://localhost:9393")
   .then(response => response.json())
   .then((tasks) => {
     console.log(tasks)
@@ -14,9 +14,13 @@ useEffect(() =>{
     setAllTasks(
     tasks.map((task) => (
       <div>
+
         <h2>{task.title}</h2>
+
         <p>{task.body}</p>
+
       </div>
+      
     )))
   })
 }, [])

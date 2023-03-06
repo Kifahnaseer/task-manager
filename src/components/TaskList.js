@@ -11,7 +11,7 @@ const TaskList = () => {
         };
         fetchData();
     }, []);
-
+    
     const handleDelete = async (id) => {
         const response = await fetch(`http://localhost:9393/tasks/${id}`, {
             method: "DELETE",
@@ -46,7 +46,6 @@ const TaskList = () => {
 
     return (
         <>
-            <Header/>
             <h1>Task List</h1>
             <div style={{
                 backgroundColor: "#f1f1f1",
@@ -60,23 +59,33 @@ const TaskList = () => {
             }}>
                 {tasks.map((task) => (
                     <div key={task.id} style={{
-                        backgroundColor: "#fff",
-                        borderRadius: "10px",
-                        padding: "15px",
-                        boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
-                        width: "calc(30% - 15px)",
+                        backgroundColor: "#blue",
+                        borderRadius: "15px",
+                        padding: "20px",
+                        boxShadow: "0 8px 14px 1 rgba(0, 0, 0, 0.2)",
+                        width: "calc(30% - 20px)",
                         marginBottom: "20px"
                     }}>
                         <h2>{task.name}</h2>
+
                         <p>{task.description}</p>
+
                         <p>{task.date_of_completion}</p>
+
+
                         <p>{task.follow_up}</p>
+
                         <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                            
                             <button onClick={() => handleDelete(task.id)}>Delete</button>
                             <button onClick={() => {
+
                                 const newDescription = prompt("Enter a new description:");
+
                                 const newDateOfCompletion = prompt("Enter a new due date (DD-MM-YYYY):");
+
                                 handleEdit(task.id, { description: newDescription, date_of_completion: newDateOfCompletion });
+
                             }}>Edit</button>
                         </div>
                     </div>
