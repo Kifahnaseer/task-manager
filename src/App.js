@@ -25,7 +25,7 @@ console.log(user)
     <div>
       <NavBar />
       <Routes>
-        <Route exact path = '/' element = {<Home user = {user} />}/>
+        <Route exact path = 'home/' element = {<Home user = {user} />}/>
 
         <Route exact path = '/tasks' element = {<Task />}/>
 

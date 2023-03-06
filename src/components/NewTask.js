@@ -1,29 +1,86 @@
-import React from 'react'
+import React, { useState } from "react";
 
-function NewTask() {
-  return (
-    <div>
-        <form>
-            <label>Name</label>
-            <input type="text" placeholder='Name' /><br />
-            <label>Description</label>
-            <input type="text" placeholder='Description' /><br />
-            <label>Follow Up</label>
-            <input type="text" placeholder='Follow Up' /><br />
-            <label>Date</label>
-            <input type="text" placeholder='Date' /><br />
-            <label>Date Of Completion</label>
-            <input type="text" placeholder='Date Of Completion' /><br />
-        </form>
-    </div>
-  )
-}
+const AddNewTask = () => {
+    const [task_name, setTaskName] = useState("");
+    const [description, setDescription] = useState("");
+    const [date_of_completion, setDateOfCompletion] = useState("");
+    const [follow_up, setFollowUp] = useState("");
 
-export default NewTask
+    const handleTaskNameChange = (event) => {
+        setTaskName(event.target.value);
+    };
 
+    const handleDescriptionChange = (event) => {
+        setDescription(event.target.value);
+    };
 
-     // t.string :name
-     // t.text :description
-     // t.date :date_of_completion
-     // t.boolean :follow_up
-     // t.integer :id_of_user
+    const handleDateOfCompletionChange = (event) => {
+        setDateOfCompletion(event.target.value);
+    };
+
+    const handleFollowUpChange = (event) => {
+        setFollowUp(event.target.value);
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const task = { task_name, description, date_of_completion, follow_up };
+        const response = await fetch("http://127.0.0.1:9393/tasks", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(task)
+        });
+        if (response.ok) {
+            // handle successful submission
+            console.log("Task submitted successfully");
+        } else {
+            // handle failed submission
+            console.log("Failed to submit task");
+        }
+    };
+
+    return (
+        <>
+            <Header/>
+            <h1>Add a new task</h1>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+            <div style={{ backgroundColor: "#f1f1f1", borderRadius: "10px", width: "40%", padding: "20px", boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)" }}>
+                <form onSubmit={handleSubmit} style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                }}>
+                    <label style={{ marginBottom: "20px" }}>
+                        Task Name:
+                        <br />
+                        <input type="text" value={task_name} onChange={handleTaskNameChange} style={{ width: "100%", padding: "10px", marginTop: "10px" }} />
+                    </label>
+
+                    <label style={{ marginBottom: "20px" }}>
+                        Description:
+                        <br />
+                        <input type="text" value={description} onChange={handleDescriptionChange} style={{ width: "100%", padding: "10px", marginTop: "10px" }} />
+                    </label>
+
+                    <label style={{ marginBottom: "20px" }}>
+                        date_of_completion:
+                        <br />
+                        <input type="date" value={date_of_completion} onChange={handleDateOfCompletionChange} style={{ width: "100%", padding: "10px", marginTop: "10px" }} />
+                    </label>
+
+                    <label style={{ marginBottom: "20px" }}>
+                        Status:
+                        <br />
+                        <input type="text" value={follow_up} onChange={handleFollowUpChange} style={{ width: "100%", padding: "10px", marginTop: "10px" }} placeholder="Enter Status" />
+                    </label>
+
+                    <button type="submit" style={{ backgroundColor: "deepskyblue", color: "white", padding: "10px", borderRadius: "10px", border: "none", marginTop: "20px" }}>Submit</button>
+                </form>
+
+            </div>
+        </div>
+        </>
+    )
+};

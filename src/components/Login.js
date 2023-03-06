@@ -44,12 +44,12 @@ const Login = () => {
                         type="password"
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
-                        style={{ padding: "15px", borderRadius: "10px", border: "1px solid #ccc", width: "100%" }}
+                        style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc", width: "100%" }}
                     />
                 </div>
                 <button
                     type="submit"
-                    style={{ backgroundColor: "Blue navy", color: "blue", padding: "12px 20px", border: "none", borderRadius: "10px", cursor: "pointer" }}
+                    style={{ backgroundColor: "deepskyblue", color: "white", padding: "12px 20px", border: "none", borderRadius: "10px", cursor: "pointer" }}
                 >
                     Submit
                 </button>
