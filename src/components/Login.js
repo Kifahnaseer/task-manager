@@ -1,38 +1,62 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
 
-function Login({setUser}) {
-  const [user_info, setUserInfo] = useState()
-  const navigate = useNavigate()
-  
+const Login = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
-function login(e){
-  e.preventDefault()
-  fetch("http://localhost:9393/login",{
-    method: 'POST',
-    headers: { 'Content-Type' : 'application/json' },
-    body: JSON.stringify(user_info)
-  })
-  .then(response => response.json())
-  .then(data => {
-    setUser(data)
-    localStorage.setItem('id_of_user', `${data.id}`)
-    navigate('/')
-  })
-}
-function onchange(e){
-  setUserInfo({...user_info, [e.target.name]: e.target.value})
-}
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const response = await fetch(`http://127.0.0.1:9393/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username, password })
+        });
+        if (response.ok) {
+            // successful login
+            console.log("Login successful");
+        } else {
+            // failure to log in 
+            console.log("Login failed");
+            setError("Invalid username or password");
+        }
+    };
 
-  return (
-    <div>
-      <form onSubmit={login}>
-        <input type="any_alphabet" placeholder='Enter alphabet....' name='email' onBlur={onchange}/>
-        <input type="password" placeholder='Enter your password...' name='password' onBlur={onchange}/>
-        <button>Login</button>
-      </form>
-    </div>
-  )
-}
+    return (
+        <div>
+            <h1>My Task Manager</h1>
+            <h2>Make Sure To Log In</h2>
+            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div style={{ marginBottom: "20px" }}>
+                    <label style={{ display: "block", marginBottom: "10px" }}>Username:</label>
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(event) => setUsername(event.target.value)}
+                        style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc", width: "100%" }}
+                    />
+                </div>
+                <div style={{ marginBottom: "20px" }}>
+                    <label style={{ display: "block", marginBottom: "10px" }}>Password:</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                        style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc", width: "100%" }}
+                    />
+                </div>
+                <button
+                    type="submit"
+                    style={{ backgroundColor: "deepskyblue", color: "white", padding: "12px 20px", border: "none", borderRadius: "10px", cursor: "pointer" }}
+                >
+                    Submit
+                </button>
+            </form>
+            {error && <div>{error}</div>}
+        </div>
+    );
+};
 
-export default Login
+export default Login;
