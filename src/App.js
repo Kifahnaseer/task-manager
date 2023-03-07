@@ -1,45 +1,108 @@
-import {Routes, Route, useNavigate} from 'react-router-dom'
-import { useEffect, useState } from 'react';
-import Task from './components/Task';
-import Home from './views/Home';
-import NavBar from './components/NavBar';
-import Header from './components/header';
-import Login from './components/Login';
-import NewTask from './components/NewTask';
-import TaskDetails from './components/TaskDetails';
-import TaskList from './components/TaskList';
+// import logo from './logo.svg';
+import { React, useState } from "react";
+import "./App.css";
+import LogIn from "./components/login";
+import SignUp from "./components/signup";
+import HomePage from "./components/homepage";
+import Tasks from "./components/tasks";
+import SingleTask from "./components/singletask";
+import UpdateTask from "./components/updatetask";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
+  let [loginDetails, setLoginDetails] = useState({ name: "", password: "" });
 
-  const [user, setUser] = useState({})
+  let [signupDetails, setSignupDetails] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-  const navigate = useNavigate()
-useEffect(() => {
+  let [userID, setUserID] = useState(null);
 
-  const user_id = localStorage.getItem('user_id')
-  user_id?navigate("/"):navigate("/login")
-}, [])
+  let [task, setTask] = useState({
+    name: "",
+    description: "",
+    due: "",
+    status: "NOT STARTED",
+    userID: "",
+  });
 
-console.log(user)
+  let [allTasks, setAllTasks] = useState([]);
+
+  let [currTask, setcurrTask] = useState();
+
+  let [updatedStatus, setUpdatedStatus] = useState({ status: "" });
+
+  let [todayTasks, setTodayTasks] = useState(false);
+
+  let [filterValues, setFilterValues] = useState({ status: "ALL", due: "" });
+
   return (
-    <div>
-      <NavBar />
-      <Routes>
-        <Route exact path = 'home/' element = {<Home user = {user} />}/>
-
-        <Route exact path = '/tasks' element = {<Task />}/>
-
-        <Route exact path = '/login' element = {<Login setUser = {setUser}/>} />
-
-        <Route exact path = '/newtasks' element = {<NewTask />}/> 
-
-        <Route exact path = '/taskdetails' element = {<TaskDetails />} />
-
-        <Route exact path = '/tasklist' element = {<TaskList />} />
-
-        <Route exact path = 'header' element = {<Header/>} />
-
-      </Routes>
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <LogIn
+                loginDetails={loginDetails}
+                setLoginDetails={setLoginDetails}
+                userID={userID}
+                setUserID={setUserID}
+                setAllTasks={setAllTasks}
+              />
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <SignUp
+                signupDetails={signupDetails}
+                setSignupDetails={setSignupDetails}
+              />
+            }
+          />
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/tasks"
+            element={
+              <Tasks
+                setUserID={setUserID}
+                filterValues={filterValues}
+                setFilterValues={setFilterValues}
+                userID={userID}
+                task={task}
+                setTask={setTask}
+                allTasks={allTasks}
+                setAllTasks={setAllTasks}
+                currTask={currTask}
+                setcurrTask={setcurrTask}
+                todayTasks={todayTasks}
+                setTodayTasks={setTodayTasks}
+              />
+            }
+          />
+          <Route
+            path="/tasks/:id"
+            element={<SingleTask currTask={currTask} />}
+          />
+          <Route
+            path="/tasks/update/:id"
+            element={
+              <UpdateTask
+                setFilterValues={setFilterValues}
+                currTask={currTask}
+                userID={userID}
+                setAllTasks={setAllTasks}
+                updatedStatus={updatedStatus}
+                setUpdatedStatus={setUpdatedStatus}
+                setTodayTasks={setTodayTasks}
+              />
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
